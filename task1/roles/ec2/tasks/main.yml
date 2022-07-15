@@ -1,0 +1,28 @@
+---
+# tasks file for ec2-instance
+- name: LAUNCHING EC2-INSTANCE 
+  amazon.aws.ec2:
+    key_name: "{{ ec2inst.key_pair }}"
+    instance_type: "{{ ec2inst.inst_flav }}"
+    image: "{{ ec2inst.ami }}"
+    wait: true
+    group_id: "{{ ec2inst.group_id }}"
+    count: 1
+    vpc_subnet_id: "{{ ec2inst.subnet }}"
+    assign_public_ip: yes
+    region: "{{ ec2inst.reg_name }}"
+    zone: "{{ ec2inst.zone }}"
+    state: present
+    instance_tags:
+        Name: "{{ ec2inst.inst_tag }}"
+    aws_access_key: "{{ aws.access_key }}"
+    aws_secret_key: "{{ aws.secret_key }}"
+  register: instance
+
+- name: WAIT FOR SSH
+  wait_for:
+    host: "{{ instance.instances[0].public_dns_name }}"
+    port: 22
+    state: started
+
+

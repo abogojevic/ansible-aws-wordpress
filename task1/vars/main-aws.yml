@@ -1,0 +1,30 @@
+aws:
+  access_key: ChangeME
+  secret_key: ChangeME
+
+ec2inst:
+  inst_tag: ChangeME
+  reg_name: ChangeME
+  zone: ChangeME
+  group_id: ChangeME
+  subnet: ChangeME
+  ami: ChangeME
+  key_pair: ChangeME
+  inst_flav: ChangeME
+
+rdsbase:
+  region_name: ChangeME
+  zone: ChangeME
+  inst_name: ChangeME
+  eng_name: ChangeME
+  inst_type: ChangeME
+  db_name: ChangeME
+  username: "ChangeME"
+  password: "ChangeME"
+
+wp:
+  app_user: "ChangeME"
+  http_host: "ChangeME"
+  http_conf: "ChangeME"
+  http_port: "ChangeME"
+  disable_default: true

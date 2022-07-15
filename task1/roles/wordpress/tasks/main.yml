@@ -1,0 +1,65 @@
+---
+- name: Install dependencies
+  ansible.builtin.apt: 
+      name: "{{ item }}" 
+      update_cache: yes 
+      state: present
+  loop:
+      - apache2
+      - php
+      - mysql-server
+      - libapache2-mod-php 
+      - php-mysql
+      - php-curl 
+      - php-gd 
+      - php-mbstring 
+      - php-xml 
+      - php-xmlrpc 
+      - php-soap 
+      - php-intl 
+      - php-zip
+
+- name: Create document root
+  file:
+    path: "/var/www/{{ wp.http_host }}"
+    state: directory
+    owner: "www-data"
+    group: "www-data"
+    mode: '0755'
+
+- name: Set up Apache VirtualHost
+  template:
+    src: "files/apache.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ wp.http_conf }}"
+
+- name: Enable rewrite module
+  shell: /usr/sbin/a2enmod rewrite
+
+- name: Enable new site
+  shell: /usr/sbin/a2ensite {{ wp.http_conf }}
+
+- name: Sets Up PHP Info Page
+  copy:
+    src: "files/info.php.j2"
+    dest: "/var/www/{{ wp.http_host }}/info.php"
+    owner: root
+    group: root
+    mode: a+r
+
+- name: Restart service apache2
+  ansible.builtin.service:
+    name: apache2
+    state: restarted
+
+- name: Restart service mysql
+  ansible.builtin.service:
+    name: mysql
+    state: restarted
+
+- name: EXRACT TAR FILE  INTO 
+  ansible.builtin.unarchive:
+     src: "files/wordpress-6.0.1.tar.gz"
+     dest: /var/www/html/
+     owner: root
+     group: root
+     mode: a+r

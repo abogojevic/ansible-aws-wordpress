@@ -1,0 +1,14 @@
+---
+- name: Create RDS
+  community.aws.rds_instance:
+    region: "{{ rdsbase.region_name }}"
+    zone: "{{ rdsbase.zone }}"
+    engine: "{{ rdsbase.eng_name }}"
+    db_instance_identifier: "{{ rdsbase.inst_name }}"
+    instance_type: "{{ rdsbase.inst_type }}"
+    allocated_storage: 20
+    db_name: "{{ rdsbase.db_name }}"
+    password: "{{ rdsbase.password }}"
+    username: "{{ rdsbase.username }}"
+    aws_access_key: "{{ aws.access_key }}"
+    aws_secret_key: "{{ aws.secret_key }}"

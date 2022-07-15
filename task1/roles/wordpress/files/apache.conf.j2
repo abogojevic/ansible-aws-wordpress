@@ -1,0 +1,8 @@
+<VirtualHost *:{{ wp.http_port }}>
+   ServerAdmin webmaster@localhost
+   ServerName {{ wp.http_host }}
+   ServerAlias www.{{ wp.http_host }}
+   DocumentRoot /var/www/{{ wp.http_host }}
+   ErrorLog ${APACHE_LOG_DIR}/error.log
+   CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
