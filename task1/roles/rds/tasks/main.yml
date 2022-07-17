@@ -1,5 +1,5 @@
 ---
-- name: Create RDS
+- name: create RDS
   community.aws.rds_instance:
     region: "{{ rdsbase.region_name }}"
     zone: "{{ rdsbase.zone }}"

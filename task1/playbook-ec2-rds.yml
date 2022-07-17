@@ -1,7 +1,0 @@
-- hosts: localhost
-  become: true
-  roles:
-    - ec2
-    - rds
-  vars_files:
-        - vars/main-aws.yml

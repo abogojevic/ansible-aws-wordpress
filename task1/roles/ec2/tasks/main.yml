@@ -1,6 +1,5 @@
 ---
-# tasks file for ec2-instance
-- name: LAUNCHING EC2-INSTANCE 
+- name: Launch instance
   amazon.aws.ec2:
     key_name: "{{ ec2inst.key_pair }}"
     instance_type: "{{ ec2inst.inst_flav }}"
@@ -17,12 +16,17 @@
         Name: "{{ ec2inst.inst_tag }}"
     aws_access_key: "{{ aws.access_key }}"
     aws_secret_key: "{{ aws.secret_key }}"
-  register: instance
+  register: ec2
 
-- name: WAIT FOR SSH
+- name: Add new instance to host group
+  add_host:
+    hostname: "{{ item.public_ip }}"
+    groupname: launched
+  loop: "{{ ec2.instances }}"
+
+- name: Wait for SSH to come up
   wait_for:
-    host: "{{ instance.instances[0].public_dns_name }}"
+    host: "{{ item.public_ip }}"
     port: 22
     state: started
-
-
+  loop: "{{ ec2.instances }}"

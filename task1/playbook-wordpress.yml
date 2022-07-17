@@ -1,6 +1,0 @@
-- hosts: aws-ec2
-  become: true
-  roles:
-    - wordpress
-  vars_files:
-        - vars/main-aws.yml

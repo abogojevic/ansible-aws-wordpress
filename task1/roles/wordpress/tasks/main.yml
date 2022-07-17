@@ -2,8 +2,7 @@
 - name: Install dependencies
   ansible.builtin.apt: 
       name: "{{ item }}" 
-      update_cache: yes 
-      state: present
+      state: latest
   loop:
       - apache2
       - php
@@ -13,11 +12,9 @@
       - php-curl 
       - php-gd 
       - php-mbstring 
-      - php-xml 
-      - php-xmlrpc 
-      - php-soap 
-      - php-intl 
-      - php-zip
+      - php-xml
+
+# Apache Configuration
 
 - name: Create document root
   file:
@@ -55,6 +52,11 @@
   ansible.builtin.service:
     name: mysql
     state: restarted
+
+#      #- name: DOWNLOAD WORDPRESS FILE
+#      # get_url:
+#      #url:  https://wordpress.org/latest.tar.gz
+#      #dest: /var/www/html/
 
 - name: EXRACT TAR FILE  INTO 
   ansible.builtin.unarchive:

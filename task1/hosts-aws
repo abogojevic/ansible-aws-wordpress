@@ -1,2 +1,0 @@
-[aws-ec2]
-aws-ec2 ansible_host=PUBLIC_IP_EC2_INSTANCE
